@@ -19,7 +19,7 @@ router.post('/', function (solicitud, respuesta) {
     enlace: solicitud.body.enlace   
   }
 
-  const datosProyectos = new Usuario(datosProyectos)
+  const nuevoProyecto = new Proyecto(datosProyectos)
   nuevoProyecto.save(function(error, proyectoCreado) {
     responder(error, respuesta, proyectoCreado)
   })

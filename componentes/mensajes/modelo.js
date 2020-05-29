@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const mensajeSchema = new mongoose.Schema({
   nombreMensaje: { type: String, required: true },
-  correoMensaje: { type: String, required: true, unique: true },
+  correoMensaje: { type: String, required: true },
   mensaje: { type: String, required: true }
 })
 

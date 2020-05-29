@@ -20,6 +20,8 @@ app.get('/', function(solicitud, respuesta) {
 app.use('/usuarios', rutasDeUsuarios)
 app.use('/proyectos', rutasDeProyectos)
 
+app.use('/avatares', express.static('avatares'))
+
 // Encendemos el servidor de express
 app.listen(PUERTO, function() {
   console.log(`Escuchando en http://localhost:${PUERTO}`)
