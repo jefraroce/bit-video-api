@@ -1,6 +1,7 @@
 const express = require('express')
 const { conectarBaseDeDatos } = require('./bd')
 const rutasDeUsuarios = require('./componentes/usuarios/rutas')
+const rutasDeProyectos = require('./componentes/proyectos/rutas')
 const bodyParser = require('body-parser')
 
 // Inicializamos express
@@ -13,10 +14,11 @@ app.use(bodyParser.json())
 
 // Agregamos nuestras rutas
 app.get('/', function(solicitud, respuesta) {
-  respuesta.send('Hola')
+  respuesta.send('Hola Bit')
 })
 
 app.use('/usuarios', rutasDeUsuarios)
+app.use('/proyectos', rutasDeProyectos)
 
 // Encendemos el servidor de express
 app.listen(PUERTO, function() {
