@@ -1,5 +1,6 @@
 const express = require('express')
 const { conectarBaseDeDatos } = require('./bd')
+const cors = require('cors')
 const rutasDeUsuarios = require('./componentes/usuarios/rutas')
 const rutasDeProyectos = require('./componentes/proyectos/rutas')
 const bodyParser = require('body-parser')
@@ -10,6 +11,7 @@ const PUERTO = process.env.PORT || 3000
 
 conectarBaseDeDatos()
 
+app.use(cors())
 app.use(bodyParser.json())
 
 // Agregamos nuestras rutas
