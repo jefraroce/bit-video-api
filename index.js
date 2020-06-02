@@ -16,11 +16,15 @@ app.use(bodyParser.json())
 
 // Agregamos nuestras rutas
 app.get('/', function(solicitud, respuesta) {
-  respuesta.send('Hola Bit')
+  respuesta.send('<h1>¡Bienvenidos!</h1> <h3>Menú</h3><ul><li><a href="/usuario">Ver Usuarios</a></li><li><a href="/proyecto">Ver Proyecto</a></li><li><a href="/mensaje">Ver Mensaje</a></li><li><a href="/donacion">Ver Donacion</a></li><li><a href="/plan">Ver Plan</a></li></ul>')
 })
 
-app.use('/usuarios', rutasDeUsuarios)
-app.use('/proyectos', rutasDeProyectos)
+require('./componentes/usuarios/usuario.rutas')(app);
+require('./componentes/proyectos/proyecto.rutas')(app);
+require('./componentes/mensajes/mensaje.rutas')(app);
+require('./componentes/donaciones/donacion.rutas')(app);
+require('./componentes/planes/plan.rutas')(app);
+
 
 app.use('/avatares', express.static('avatares'))
 
