@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple')
 const moment = require('moment')
+const { responder } = require('./funciones')
 const SECRET = 'misecreto'
 
 const crearToken = function (usuario) {
