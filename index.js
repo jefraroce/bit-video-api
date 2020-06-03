@@ -1,8 +1,6 @@
 const express = require('express')
 const { conectarBaseDeDatos } = require('./bd')
 const cors = require('cors')
-const rutasDeUsuarios = require('./componentes/usuarios/rutas')
-const rutasDeProyectos = require('./componentes/proyectos/rutas')
 const bodyParser = require('body-parser')
 
 // Inicializamos express
