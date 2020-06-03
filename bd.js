@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const conectarBaseDeDatos = async function () {
-  await mongoose.connect('mongodb+srv://prueba-bit:12345bit@bit-5lgzk.mongodb.net/bit_video', {
+  await mongoose.connect('mongodb+srv://JOSE8327:JOSE8327@cluster0-o0lnc.mongodb.net/bit-video', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -10,3 +10,4 @@ const conectarBaseDeDatos = async function () {
 }
 
 module.exports = { conectarBaseDeDatos }
+
