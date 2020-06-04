@@ -1,5 +1,6 @@
 const Mensaje = require('./mensaje.modelo');
 const { responder } = require('../../utilidades/funciones')
+const { enviarCorreo } = require('../../utilidades/funciones')
 
 // Create and Save a new Mensaje
 exports.create = (req, res) => {
@@ -16,11 +17,21 @@ exports.create = (req, res) => {
         correoMensaje: req.body.correoMensaje,
         mensaje: req.body.mensaje
     });
-
     // Save Mensaje in the database
     mensaje.save()
         .then(data => {
             res.send(data);
+
+            const contenidoCorreo = `<h1>Muchas gracias por tu donación</h1>
+               <table>
+                   <thead>
+                       <tr>
+                          <td>${data.nombreMensaje}</td>
+                       </tr>
+                   </thead>
+               </table>`;
+
+            enviarCorreo(req.body.correoMensaje, 'mensaje', contenidoCorreo)
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Mensaje."
