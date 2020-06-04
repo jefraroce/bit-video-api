@@ -33,8 +33,8 @@ exports.create = (req, res) => {
 // Retrieve and return all donacions from the database.
 exports.findAll = (req, res) => {
     Donacion.find()
-        .then(donacions => {
-            res.send(donacions);
+        .then(donaciones => {
+            res.send(donaciones);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error obteniendo los donacions."

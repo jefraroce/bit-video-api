@@ -1,3 +1,4 @@
+
 const Usuario = require("./usuario.modelo");
 const { responder } = require("../../utilidades/funciones");
 const bcrypt = require("bcryptjs");
@@ -6,6 +7,7 @@ const {
     middlewareDeAutorizacion,
     validarToken,
 } = require("../../utilidades/autenticacion");
+
 
 exports.login = (req, res) => {
     Usuario.findOne({ correoElectronico: req.body.correoElectronico }, function(
@@ -31,14 +33,6 @@ exports.login = (req, res) => {
 
 // Create and Save a new Usuario
 exports.create = (req, res) => {
-    //Validate request
-    console.log(req.body.content);
-    console.log(req.body);
-    // if (!req.body.content) {
-    //     return res.status(400).send({
-    //         message: "El contenido del Usuario no puede estar vacio",
-    //     });
-    // }
 
     // Create a Usuario
     const usuario = new Usuario({
@@ -47,9 +41,9 @@ exports.create = (req, res) => {
     }`,
         nombre: req.body.nombre,
         correoElectronico: req.body.correoElectronico,
-        contrasenaEncriptada: req.body.contrasena === undefined ?
-            null :
-            bcrypt.hashSync(req.body.contrasena),
+
+        contrasenaEncriptada: typeof req.body.contrasena === 'string' && req.body.contrasena.length >= 6 ? bcrypt.hashSync(req.body.contrasena) : null
+
     });
 
     // Save Usuario in the database
