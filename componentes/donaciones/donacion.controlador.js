@@ -1,5 +1,5 @@
 const Donacion = require('./donacion.modelo');
-const { responder } = require('../../utilidades/funciones')
+const { enviarCorreo } = require('../../utilidades/funciones')
 
 // Create and Save a new Donacion
 exports.create = (req, res) => {
@@ -21,8 +21,20 @@ exports.create = (req, res) => {
 
     // Save Donacion in the database
     donacion.save()
-        .then(data => {
-            res.send(data);
+        .then(donacionGuardada => {
+            res.send(donacionGuardada);
+
+            const contenidoCorreo = `<h1>Muchas Gracias por tu donación</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>${donacionGuardada.nombreDonante}</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>`;
+
+            enviarCorreo(donacionGuardada.correoDonante, 'Gracias por tu donación', contenidoCorreo)
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Donacion."

@@ -1,5 +1,4 @@
 const Mensaje = require('./mensaje.modelo');
-const { responder } = require('../../utilidades/funciones')
 const { enviarCorreo } = require('../../utilidades/funciones')
 
 // Create and Save a new Mensaje
