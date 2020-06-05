@@ -29,7 +29,7 @@ const enviarCorreo = function (correoDeDestino, asunto, contenidoHTML, contenido
   })
 
   const elCorreoEntero = {
-    from: '"BIT Video 👻" <info@bit-video.com>',
+    from: '"BIT Video 📽️" <info@bit-video.com>',
     to: correoDeDestino,
     subject: asunto,
     text: contenidoTexto,
