@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all plans from the database.
 exports.findAll = (req, res) => {
-    Plan.find()
+    Plan.find(req.query)
         .then(plans => {
             res.send(plans);
         }).catch(err => {
