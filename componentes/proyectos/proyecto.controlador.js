@@ -12,7 +12,7 @@ exports.create = (req, res) => {
 
     // Create a Proyecto
     const proyecto = new Proyecto({
-        proyectoId: req.body.proyectoId,
+        usuarioId: req.body.usuarioId,
         nombreProyecto: req.body.nombreProyecto,
         descripcionProyecto: req.body.descripcionProyecto,
         portada: req.body.portada,
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all proyectos from the database.
 exports.findAll = (req, res) => {
-    Proyecto.find()
+    Proyecto.find(req.query)
         .then(proyectos => {
             res.send(proyectos);
         }).catch(err => {
@@ -42,29 +42,29 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Encontrar un proyecto con el proyectoId
+// Encontrar un proyecto con el usuarioId
 exports.findOne = (req, res) => {
     Proyecto.findById(req.params.proyectoId)
         .then(proyecto => {
             if (!proyecto) {
                 return res.status(404).send({
-                    message: "Proyecto no encontrado con id " + req.params.proyectoId
+                    message: "Proyecto no encontrado con id " + req.params.usuarioId
                 });
             }
             res.send(proyecto);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Proyecto no encontrado con id " + req.params.proyectoId
+                    message: "Proyecto no encontrado con id " + req.params.usuarioId
                 });
             }
             return res.status(500).send({
-                message: "Error obteniendo el proyecto con id " + req.params.proyectoId
+                message: "Error obteniendo el proyecto con id " + req.params.usuarioId
             });
         });
 };
 
-// Update a proyecto identified by the proyectoId in the request
+// Update a proyecto identified by the usuarioId in the request
 exports.update = (req, res) => {
     // Validate Request
     if (!req.body.content) {
@@ -73,7 +73,7 @@ exports.update = (req, res) => {
         });
     }
     const proyecto = new Proyecto({
-        proyectoId: req.body.proyectoId,
+        usuarioId: req.body.usuarioId,
         nombreProyecto: req.body.nombreProyecto,
         descripcionProyecto: req.body.descripcionProyecto,
         portada: req.body.portada,
