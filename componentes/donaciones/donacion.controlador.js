@@ -1,5 +1,7 @@
 const Donacion = require('./donacion.modelo');
 const { enviarCorreo } = require('../../utilidades/funciones')
+const Plan = require('../planes/plan.modelo')
+const Proyecto =require('../proyectos/proyecto.modelo')
 
 // Create and Save a new Donacion
 exports.create = (req, res) => {
@@ -21,20 +23,20 @@ exports.create = (req, res) => {
 
     // Save Donacion in the database
     donacion.save()
-        .then(donacionGuardada => {
-            res.send(donacionGuardada);
-
-            const contenidoCorreo = `<h1>Muchas Gracias por tu donación</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>${donacionGuardada.nombreDonante}</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>`;
-
-            enviarCorreo(donacionGuardada.correoDonante, 'Gracias por tu donación', contenidoCorreo)
+        .then(data => {
+            res.send(data);
+Plan.findById(donacion.planId).then((infoPlan) => {
+    Proyecto.findById(donacion.proyectoId).then((infoProyecto) => {
+    const contenidoCorreo = 
+        `<h1>${data.nombreDonante}</h1>
+        <h3>Muchas Gracias por tu donación de ${infoPlan.valor}</h3>
+        <h3>Para el proyecto ${infoProyecto.nombreProyecto}</h3>
+        <h3>Recibiras el contenido y sus actualizaciones durante un año.</h3>
+        <h2>Cordialmente,</h2> <br> <h3>Equipo Bit Video 📽️ </h3>`;
+        
+        enviarCorreo(data.correoDonante, 'Gracias por tu donación', contenidoCorreo)  
+})})
+                    
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Donacion."
