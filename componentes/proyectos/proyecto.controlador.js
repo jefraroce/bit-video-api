@@ -67,7 +67,7 @@ exports.findOne = (req, res) => {
 // Update a proyecto identified by the usuarioId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.content) {
+    if (!req.body) {
         return res.status(400).send({
             message: "El proyecto no puede estar vacio"
         });

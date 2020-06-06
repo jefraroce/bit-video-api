@@ -11,7 +11,7 @@ exports.create = (req, res) => {
             message: "El contenido del Donacion no puede estar vacio"
         });
     }
-
+    console.log(req.body)
     // Create a Donacion
     const donacion = new Donacion({
         proyectoId: req.body.proyectoId,
