@@ -1,5 +1,4 @@
 const Proyecto = require('./proyecto.modelo');
-const { responder } = require('../../utilidades/funciones')
 
 // Create and Save a new Proyecto
 exports.create = (req, res) => {

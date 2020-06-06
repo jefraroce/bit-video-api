@@ -7,6 +7,7 @@ const crearToken = function (usuario) {
   const payload = {
     id: usuario._id,
     nombre: usuario.nombre,
+    avatar: usuario.avatar,
     fechaDeExpiracion: moment().add(1, 'day').unix()
   }
 
