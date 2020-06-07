@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     // Save Proyecto in the database
     proyecto.save()
         .then(data => {
-            res.send(data);
+            res.status(201).send(data);
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Proyecto."
@@ -31,6 +31,10 @@ exports.create = (req, res) => {
 
 // Retrieve and return all proyectos from the database.
 exports.findAll = (req, res) => {
+    if (req.query && req.query.nombreProyecto) {
+        req.query.nombreProyecto = new RegExp(`.*${req.query.nombreProyecto}.*`, 'i');
+    }
+
     Proyecto.find(req.query)
         .then(proyectos => {
             res.send(proyectos);
