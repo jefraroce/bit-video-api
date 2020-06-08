@@ -36,9 +36,7 @@ exports.create = (req, res) => {
 
     // Create a Usuario
     const usuario = new Usuario({
-        avatar: `${req.protocol}://${req.get("host")}/${req.file.destination}${
-      req.file.filename
-    }`,
+        avatar: `${req.protocol}://${req.get("host")}/${req.file.destination}${req.file.filename}`,
         nombre: req.body.nombre,
         correoElectronico: req.body.correoElectronico,
 
@@ -53,9 +51,8 @@ exports.create = (req, res) => {
             res.send(data);
         })
         .catch((err) => {
-            res.status(500).send({
-                message: "Ha ocurrido algun error creando el Usuario.",
-            });
+            console.error(err)
+            res.status(500).json(err);
         });
 };
 

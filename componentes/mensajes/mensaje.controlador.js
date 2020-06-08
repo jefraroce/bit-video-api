@@ -12,16 +12,16 @@ exports.create = (req, res) => {
 
     // Create a Mensaje
     const mensaje = new Mensaje({
-        nombreMensaje: req.body.nombreMensaje,
+        nombre: req.body.nombre,
         correoMensaje: req.body.correoMensaje,
         mensaje: req.body.mensaje
     });
     // Save Mensaje in the database
     mensaje.save()
         .then(data => {
-            res.send(data);
+            res.status(201).send(data);
 
-            const contenidoCorreo = `<h1>Muchas gracias por tu donación</h1>
+            const contenidoCorreo = `<h1>Muchas gracias por tu mensaje, pronto nuestro equipo se comunicara contigo</h1>
                <table>
                    <thead>
                        <tr>
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
                    </thead>
                </table>`;
 
-            enviarCorreo(req.body.correoMensaje, 'mensaje', contenidoCorreo)
+            enviarCorreo(req.body.correoMensaje, 'Equipo BIT-Video', contenidoCorreo)
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Mensaje."
@@ -81,7 +81,7 @@ exports.update = (req, res) => {
         });
     }
     const datosMensajes = {
-        nombreMensaje: req.body.nombreMensaje,
+        nombre: req.body.nombre,
         correoMensaje: req.body.correoMensaje,
         mensaje: req.body.mensaje
     };
