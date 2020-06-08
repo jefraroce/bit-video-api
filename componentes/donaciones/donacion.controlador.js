@@ -1,7 +1,9 @@
 const Donacion = require('./donacion.modelo');
-const { enviarCorreo } = require('../../utilidades/funciones')
+const {
+    enviarCorreo
+} = require('../../utilidades/funciones')
 const Plan = require('../planes/plan.modelo')
-const Proyecto =require('../proyectos/proyecto.modelo')
+const Proyecto = require('../proyectos/proyecto.modelo')
 
 // Create and Save a new Donacion
 exports.create = (req, res) => {
@@ -25,18 +27,18 @@ exports.create = (req, res) => {
     donacion.save()
         .then(data => {
             res.send(data);
-Plan.findById(donacion.planId).then((infoPlan) => {
-    Proyecto.findById(donacion.proyectoId).then((infoProyecto) => {
-    const contenidoCorreo = 
-        `<h1>${data.nombreDonante}</h1>
-        <h3>Muchas Gracias por tu donación de ${infoPlan.valor}</h3>
-        <h3>Para el proyecto ${infoProyecto.nombreProyecto}</h3>
-        <h3>Recibiras el contenido y sus actualizaciones durante un año.</h3>
-        <h2>Cordialmente,</h2> <br> <h3>Equipo Bit Video 📽️ </h3>`;
-        
-        enviarCorreo(data.correoDonante, 'Gracias por tu donación', contenidoCorreo)  
-})})
-                    
+            Plan.findById(donacion.planId).then((infoPlan) => {
+                Proyecto.findById(donacion.proyectoId).then((infoProyecto) => {
+                    const contenidoCorreo =
+                        `<h1>${data.nombreDonante}</h1>
+                        <h3>Muchas Gracias por tu donación de ${infoPlan.valor} al proyecto ${infoProyecto.nombreProyecto}</h3>
+                        <p>Recibiras el contenido y sus actualizaciones durante un año.</p>
+                        <p>Cordialmente, <br/>Equipo Bit Video 📽️ </p>`;
+
+                    enviarCorreo(data.correoDonante, 'Gracias por tu donación', contenidoCorreo);
+                })
+            })
+
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ha ocurrido algun error creando el Donacion."
@@ -94,7 +96,9 @@ exports.update = (req, res) => {
         telefonoDonante: req.body.telefonoDonante
     });
     // Encontrar el donacion y actualizarlo con el body del request
-    Donacion.findByIdAndUpdate(req.params.donacionId, donacion, { new: true })
+    Donacion.findByIdAndUpdate(req.params.donacionId, donacion, {
+            new: true
+        })
         .then(donacion => {
             if (!donacion) {
                 return res.status(404).send({
@@ -123,7 +127,9 @@ exports.delete = (req, res) => {
                     message: "Donacion no encontrado con id " + req.params.donacionId
                 });
             }
-            res.send({ message: "Donacion eliminado successfully!" });
+            res.send({
+                message: "Donacion eliminado successfully!"
+            });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
