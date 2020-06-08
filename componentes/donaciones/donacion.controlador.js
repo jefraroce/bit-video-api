@@ -20,7 +20,8 @@ exports.create = (req, res) => {
         planId: req.body.planId,
         nombreDonante: req.body.nombreDonante,
         correoDonante: req.body.correoDonante,
-        telefonoDonante: req.body.telefonoDonante
+        telefonoDonante: req.body.telefonoDonante,
+        valor: req.body.valor
     });
 
     // Save Donacion in the database
@@ -48,7 +49,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all donacions from the database.
 exports.findAll = (req, res) => {
-    Donacion.find()
+    Donacion.find(req.query)
         .then(donaciones => {
             res.send(donaciones);
         }).catch(err => {
@@ -93,7 +94,8 @@ exports.update = (req, res) => {
         planId: req.body.planId,
         nombreDonante: req.body.nombreDonante,
         correoDonante: req.body.correoDonante,
-        telefonoDonante: req.body.telefonoDonante
+        telefonoDonante: req.body.telefonoDonante,
+        valor: req.body.valor
     });
     // Encontrar el donacion y actualizarlo con el body del request
     Donacion.findByIdAndUpdate(req.params.donacionId, donacion, {
