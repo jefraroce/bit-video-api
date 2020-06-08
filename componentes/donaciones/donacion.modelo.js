@@ -5,7 +5,8 @@ const donacionSchema = new mongoose.Schema({
   planId: { type: String, required: false },
   nombreDonante: { type: String, required: true },
   correoDonante: { type: String, required: true },
-  telefonoDonante: { type: String, required: true }
+  telefonoDonante: { type: String, required: true },
+  valor: { type: Number, required: true }
 })
 
 const Donacion = mongoose.model('donaciones', donacionSchema)
