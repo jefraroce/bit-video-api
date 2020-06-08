@@ -10,4 +10,3 @@ const conectarBaseDeDatos = async function () {
 }
 
 module.exports = { conectarBaseDeDatos }
-
