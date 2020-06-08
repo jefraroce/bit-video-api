@@ -15,7 +15,6 @@ exports.login = (req, res) => {
         usuario
     ) {
         const mensajeEnCasoDeError = "Ni el correo, ni la contraseña coinciden";
-        console.log(usuario);
         if (usuario !== null) {
             if (
                 error ||
@@ -39,9 +38,7 @@ exports.create = (req, res) => {
         avatar: `${req.protocol}://${req.get("host")}/${req.file.destination}${req.file.filename}`,
         nombre: req.body.nombre,
         correoElectronico: req.body.correoElectronico,
-
         contrasenaEncriptada: typeof req.body.contrasena === 'string' && req.body.contrasena.length >= 6 ? bcrypt.hashSync(req.body.contrasena) : null
-
     });
 
     // Save Usuario in the database
@@ -94,24 +91,23 @@ exports.findOne = (req, res) => {
 // Update a usuario identified by the usuarioId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.content) {
+    if (!req.body) {
         return res.status(400).send({
             message: "El usuario no puede estar vacio",
         });
     }
 
+    if (req.file) {
+        req.body.avatar = `${req.protocol}://${req.get("host")}/${req.file.destination}${req.file.filename}`;
+    }
+
+    if (typeof req.body.contrasena === 'string' && req.body.contrasena.length >= 6) {
+        req.body.contrasenaEncriptada = bcrypt.hashSync(req.body.contrasena);
+    }
+
     // Encontrar el usuario y actualizarlo con el body del request
     Usuario.findByIdAndUpdate(
-            req.params.usuarioId, {
-                avatar: `${req.protocol}://${req.get("host")}/${req.file.destination}${
-        req.file.filename
-      }`,
-                nombre: req.body.nombre,
-                correoElectronico: req.body.correoElectronico,
-                contrasenaEncriptada: req.body.contrasena === undefined ?
-                    null :
-                    bcrypt.hashSync(req.body.contrasena),
-            }, { new: true }
+            req.params.usuarioId, req.body, { new: true }
         )
         .then((usuario) => {
             if (!usuario) {
@@ -119,7 +115,7 @@ exports.update = (req, res) => {
                     message: "No se ha encontrado un usuario con el id " + req.params.usuarioId,
                 });
             }
-            res.send(usuario);
+            res.status(200).send(usuario);
         })
         .catch((err) => {
             if (err.kind === "ObjectId") {
