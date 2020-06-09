@@ -66,7 +66,7 @@ exports.findOne = (req, res) => {
 // Update a plan identified by the planId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.content) {
+    if (!req.body) {
         return res.status(400).send({
             message: "El plan no puede estar vacio"
         });

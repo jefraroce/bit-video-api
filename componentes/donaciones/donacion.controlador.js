@@ -84,7 +84,7 @@ exports.findOne = (req, res) => {
 // Update a donacion identified by the donacionId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.content) {
+    if (!req.body) {
         return res.status(400).send({
             message: "El donacion no puede estar vacio"
         });

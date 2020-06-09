@@ -16,7 +16,7 @@ module.exports = (app) => {
     app.get("/usuario/:usuarioId", usuario.findOne);
 
     // Actualizar un Usuario con el usuarioId
-    app.put("/usuario/:usuarioId", usuario.update);
+    app.put("/usuario/:usuarioId", subidaDeArchivos.single("avatar"), usuario.update);
 
     // Eliminar un Usuario con el usuarioId
     app.delete("/usuario/:usuarioId", usuario.delete);
